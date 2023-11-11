@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   CardHeader,
   Avatar,
@@ -59,16 +59,33 @@ const priorityIcon = {
   },
 };
 
-const ColumnTitleCard = ({ group, groupingOption }) => {
+const ColumnTitleCard = ({ group, groupingOption, joinedData }) => {
   const modifiedString = group.replace(/ /g, "").toLowerCase();
-
+  let count = 0;
+  const countUsers = joinedData.filter((item) => item.name === group);
+  const countPriority = joinedData.filter((item) => {
+    return item.priority === +group;
+  });
+  const countStatus = joinedData.filter((item) => {
+    return item.status === group;
+  });
+  if (groupingOption === "user") {
+    count = countUsers.length;
+  } else if (groupingOption === "priority") {
+    count = countPriority.length;
+  } else {
+    count = countStatus.length;
+  }
   return (
     <CardHeader>
       <StartElements>
         {groupingOption === "user" ? (
           <Avatar>
             <img src={userAvatarUrl} alt="User Avatar" className="avatar_img" />
-            <StatusIndicator className="status-indicator" status="active" />
+            <StatusIndicator
+              className="status-indicator"
+              status={countUsers[0].available}
+            />
           </Avatar>
         ) : (
           <div>
@@ -80,7 +97,7 @@ const ColumnTitleCard = ({ group, groupingOption }) => {
         <Name>
           {groupingOption === "priority" ? priorityIcon[group].text : group}
         </Name>
-        <Count>2</Count>
+        <Count>{count}</Count>
       </StartElements>
       <EndElements>
         <PlusIcon>

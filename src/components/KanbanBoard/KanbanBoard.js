@@ -1,40 +1,70 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import Navbar from "../Navbar/Navbar";
-import data from "../../data.json";
 import ColumnTitleCard from "../ColumnTitleCard/ColumnTitleCard";
 
 const KanbanBoard = ({ tickets, users }) => {
+  const combinedData = {
+    joinedData: tickets.map((ticket) => {
+      const user = users.find((u) => u.id === ticket.userId);
+      return { ...user, ...ticket };
+    }),
+  };
   const [groupingOption, setGroupingOption] = useState(
     localStorage.getItem("groupingOption") || "status"
+  );
+  const [orderingOption, setOrderingOption] = useState(
+    localStorage.getItem("orderingOption") || "priority"
   );
   const [groupedData, setGroupedData] = useState({});
 
   const handleApplyClick = (grouping, ordering) => {
     setGroupingOption(grouping);
-    // Save the selected grouping option to localStorage
+    setOrderingOption(ordering);
     localStorage.setItem("groupingOption", grouping);
-    // Group the data based on the selected grouping option
-    const newGroupedData = groupData(grouping);
+    localStorage.setItem("orderingOption", ordering);
+    const newGroupedData = groupData(grouping, ordering);
     setGroupedData(newGroupedData);
   };
 
-  const groupData = (grouping) => {
+  const groupData = (grouping, ordering) => {
+    let groupedData = {};
     switch (grouping) {
       case "status":
-        return groupByStatus();
+        groupedData = groupByStatus();
+        break;
       case "user":
-        return groupByUser();
+        groupedData = groupByUser();
+        break;
       case "priority":
-        return groupByPriority();
+        groupedData = groupByPriority();
+        break;
       default:
-        return groupByStatus();
+        groupedData = groupByStatus();
+        break;
     }
+    if (ordering === "priority") {
+      Object.keys(groupedData).forEach((key) => {
+        groupedData[key].sort((a, b) => b.priority - a.priority);
+      });
+    }
+
+    if (ordering === "title") {
+      Object.keys(groupedData).forEach((key) => {
+        const sortObj = groupedData[key].sort(
+          (a, b) => a.title.toLowerCase() - b.title.toLowerCase()
+        );
+        return sortObj;
+      });
+    }
+
+    return groupedData;
   };
 
   const groupByStatus = () => {
     const statusGroups = {};
-    tickets.forEach((ticket) => {
+    combinedData.joinedData.forEach((ticket) => {
       const { status } = ticket;
       if (!statusGroups[status]) {
         statusGroups[status] = [];
@@ -47,22 +77,12 @@ const KanbanBoard = ({ tickets, users }) => {
 
   const groupByUser = () => {
     const userGroups = {};
-    const userIdToInfo = {};
-    users.forEach((user) => {
-      userIdToInfo[user.id] = {
-        name: user.name,
-        available: user.available,
-      };
-    });
-    tickets.forEach((ticket) => {
-      const { userId } = ticket;
-      if (!userGroups[userIdToInfo[userId].name]) {
-        userGroups[userIdToInfo[userId].name] = {
-          tickets: [],
-          userInfo: userIdToInfo[userId],
-        };
+    combinedData.joinedData.forEach((ticket) => {
+      const { name } = ticket;
+      if (!userGroups[name]) {
+        userGroups[name] = [];
       }
-      userGroups[userIdToInfo[userId].name].tickets.push(ticket);
+      userGroups[name].push(ticket);
     });
 
     return userGroups;
@@ -70,7 +90,7 @@ const KanbanBoard = ({ tickets, users }) => {
 
   const groupByPriority = () => {
     const priorityGroups = {};
-    tickets.forEach((ticket) => {
+    combinedData.joinedData.forEach((ticket) => {
       const { priority } = ticket;
       if (!priorityGroups[priority]) {
         priorityGroups[priority] = [];
@@ -81,7 +101,9 @@ const KanbanBoard = ({ tickets, users }) => {
   };
 
   useEffect(() => {
-    const newGroupedData = groupData(groupingOption);
+    localStorage.setItem("groupingOption", groupingOption);
+    localStorage.setItem("orderingOption", orderingOption);
+    const newGroupedData = groupData(groupingOption, orderingOption);
     setGroupedData(newGroupedData);
   }, [groupingOption]);
 
@@ -94,26 +116,17 @@ const KanbanBoard = ({ tickets, users }) => {
             key={index}
             group={group}
             groupingOption={groupingOption}
+            joinedData={combinedData.joinedData}
           />
         ))}
       </div>
       <div className="group-container">
-        {Object.entries(groupedData).map(([group, groupData], idx) => (
-          <React.Fragment key={idx}>
-            {groupingOption === "user" ? (
-              <div key={group} className="group">
-                {groupData.tickets.map((ticket, index) => (
-                  <Card key={ticket.id} data={ticket} />
-                ))}
-              </div>
-            ) : (
-              <div key={group} className="group">
-                {groupData.map((ticket, index) => (
-                  <Card key={ticket.id} data={ticket} />
-                ))}
-              </div>
-            )}
-          </React.Fragment>
+        {Object.entries(groupedData).map(([group, groupData]) => (
+          <div key={group} className="group">
+            {groupData.map((ticket, idx, groupData) => (
+              <Card key={ticket.id} data={ticket} count={groupData.length} />
+            ))}
+          </div>
         ))}
       </div>
     </div>

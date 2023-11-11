@@ -41,16 +41,6 @@ select {
   background-color: #fff;
 }
 
-.card-body h3 {
-  font-size: 18px;
-  margin: 10px 0;
-}
-
-.card-body p {
-  font-size: 14px;
-  margin: 5px 0;
-}
-
 .group-container {
   margin-top: 2rem;
   display: flex;

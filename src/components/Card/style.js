@@ -32,10 +32,12 @@ export const Avatar = styled.div`
 export const StatusIndicator = styled.span`
   width: 12px;
   height: 12px;
-  background-color: #6cd969;
+  background-color: ${(props) => (props.available ? "#6cd969" : "grey")};
   border-radius: 50%;
   margin-left: 5px;
   position: absolute;
   bottom: 4px;
   left: 24px;
 `;
+
+export const CardBody = styled.div``;

@@ -1,23 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "./App.css";
+import { useEffect } from "react";
 import KanbanBoard from "./components/KanbanBoard/KanbanBoard";
-import useQueryHook from "./CustomHook/useQueryHook";
+import { useGetDataQuery } from "./CustomHook/useQueryHook";
 
 function App() {
-  const { data, isLoading, isError } = useQueryHook();
+  const { data, isLoading, isError, refetch } = useGetDataQuery();
 
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
-
-  if (isError) {
-    return <div className="App">Error while fetching data</div>;
-  }
-
-  const { tickets, users } = data;
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <div className="App">
-      <KanbanBoard tickets={tickets} users={users} />
+      {isLoading && <p>Loading data...</p>}
+      {isError && <p>Error fetching data</p>}
+      {data && <KanbanBoard tickets={data.tickets} users={data.users} />}
     </div>
   );
 }

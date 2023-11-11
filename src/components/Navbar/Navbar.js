@@ -13,7 +13,9 @@ const Navbar = ({ handleApplyClick }) => {
   const [groupingOption, setGroupingOption] = useState(
     localStorage.getItem("groupingOption") || "status"
   );
-  const [orderingOption, setOrderingOption] = useState("priority");
+  const [orderingOption, setOrderingOption] = useState(
+    localStorage.getItem("orderingOption") || "priority"
+  );
   const optionsContainerRef = useRef(null);
 
   const toggleOptions = () => {

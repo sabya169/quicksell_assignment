@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 export const CardHeader = styled.div`
   display: flex;
-  align-items: baseline;
+  align-items: center;
   width: 100%;
   justify-content: center;
   flex-wrap: wrap;
-  align-content: center;
 `;
 
 export const Avatar = styled.div`
@@ -22,8 +21,7 @@ export const Avatar = styled.div`
 export const StatusIndicator = styled.span`
   width: 12px;
   height: 12px;
-  background-color: ${(props) =>
-    props.status === "active" ? "#6cd969" : "red"};
+  background-color: ${(props) => (props.status ? "#6cd969" : "red")};
   border-radius: 50%;
   margin-left: 5px;
   position: absolute;
