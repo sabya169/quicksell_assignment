@@ -4,13 +4,17 @@ import Navbar from "../Navbar/Navbar";
 import data from "../../data.json";
 import ColumnTitleCard from "../ColumnTitleCard/ColumnTitleCard";
 
-const KanbanBoard = () => {
-  const { tickets, users } = data;
-  const [groupingOption, setGroupingOption] = useState("status");
+const KanbanBoard = ({ tickets, users }) => {
+  const [groupingOption, setGroupingOption] = useState(
+    localStorage.getItem("groupingOption") || "status"
+  );
   const [groupedData, setGroupedData] = useState({});
 
   const handleApplyClick = (grouping, ordering) => {
     setGroupingOption(grouping);
+    // Save the selected grouping option to localStorage
+    localStorage.setItem("groupingOption", grouping);
+    // Group the data based on the selected grouping option
     const newGroupedData = groupData(grouping);
     setGroupedData(newGroupedData);
   };
@@ -77,10 +81,9 @@ const KanbanBoard = () => {
   };
 
   useEffect(() => {
-    setGroupingOption("status");
-    const newGroupedData = groupData("status");
+    const newGroupedData = groupData(groupingOption);
     setGroupedData(newGroupedData);
-  }, []);
+  }, [groupingOption]);
 
   return (
     <div className="kanban-board">

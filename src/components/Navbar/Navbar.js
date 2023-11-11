@@ -10,7 +10,9 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Navbar = ({ handleApplyClick }) => {
   const [showOptions, setShowOptions] = useState(false);
-  const [groupingOption, setGroupingOption] = useState("status");
+  const [groupingOption, setGroupingOption] = useState(
+    localStorage.getItem("groupingOption") || "status"
+  );
   const [orderingOption, setOrderingOption] = useState("priority");
   const optionsContainerRef = useRef(null);
 
@@ -18,11 +20,12 @@ const Navbar = ({ handleApplyClick }) => {
     setShowOptions(!showOptions);
   };
 
-  const applyOptions = () => {
-    handleApplyClick(groupingOption, orderingOption); // Call the parent's function
-    setShowOptions(false); // Close the options container
-  };
-
+  useEffect(() => {
+    const savedGroupingOption = localStorage.getItem("groupingOption");
+    if (savedGroupingOption) {
+      setGroupingOption(savedGroupingOption);
+    }
+  }, []);
   useEffect(() => {
     function handleClickOutside(event) {
       if (
