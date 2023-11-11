@@ -52,10 +52,7 @@ const KanbanBoard = ({ tickets, users }) => {
 
     if (ordering === "title") {
       Object.keys(groupedData).forEach((key) => {
-        const sortObj = groupedData[key].sort(
-          (a, b) => a.title.toLowerCase() - b.title.toLowerCase()
-        );
-        return sortObj;
+        groupedData[key].sort((a, b) => a.title.localeCompare(b.title));
       });
     }
 
@@ -124,7 +121,12 @@ const KanbanBoard = ({ tickets, users }) => {
         {Object.entries(groupedData).map(([group, groupData]) => (
           <div key={group} className="group">
             {groupData.map((ticket, idx, groupData) => (
-              <Card key={ticket.id} data={ticket} count={groupData.length} />
+              <Card
+                key={ticket.id}
+                data={ticket}
+                count={groupData.length}
+                group={group}
+              />
             ))}
           </div>
         ))}

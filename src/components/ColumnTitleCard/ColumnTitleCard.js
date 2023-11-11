@@ -29,7 +29,7 @@ const userAvatarUrl =
   "https://tamilnaducouncil.ac.in/wp-content/uploads/2020/04/dummy-avatar.jpg";
 
 const statusIcon = {
-  todo: <FcTodoList size={22} />,
+  todo: <FcTodoList size={18} />,
   inprogress: <TbProgressCheck size={22} color="orange" />,
   done: <GoCheckCircleFill size={22} color="blue" />,
   cancelled: <MdCancel size={22} color="grey" />,

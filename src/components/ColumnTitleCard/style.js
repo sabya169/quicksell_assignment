@@ -21,7 +21,7 @@ export const Avatar = styled.div`
 export const StatusIndicator = styled.span`
   width: 12px;
   height: 12px;
-  background-color: ${(props) => (props.status ? "#6cd969" : "red")};
+  background-color: ${(props) => (props.status ? "#6cd969" : "grey")};
   border-radius: 50%;
   margin-left: 5px;
   position: absolute;
