@@ -10,8 +10,8 @@ export const CardHeader = styled.div`
 
 export const Avatar = styled.div`
   & .avatar_img {
-    width: 40px;
-    height: 40px;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
     margin-right: 10px;
   }
@@ -26,7 +26,7 @@ export const StatusIndicator = styled.span`
   margin-left: 5px;
   position: absolute;
   bottom: 4px;
-  left: 24px;
+  left: 1.6rem;
 `;
 
 export const StartElements = styled.div`
@@ -49,6 +49,7 @@ export const Name = styled.p`
 `;
 export const Count = styled.p`
   font-size: 1.5rem;
+  color: #6e7279;
 `;
 export const PlusIcon = styled.p`
   font-size: 1.5rem;

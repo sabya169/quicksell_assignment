@@ -65,7 +65,8 @@ const Navbar = ({ handleApplyClick }) => {
               value={groupingOption}
               onChange={(e) => {
                 setGroupingOption(e.target.value);
-                handleApplyClick(e.target.value, orderingOption); // Apply immediately
+                handleApplyClick(e.target.value, orderingOption);
+                setShowOptions(!showOptions);
               }}
             >
               <option value="status">Status</option>
@@ -82,7 +83,8 @@ const Navbar = ({ handleApplyClick }) => {
               value={orderingOption}
               onChange={(e) => {
                 setOrderingOption(e.target.value);
-                handleApplyClick(groupingOption, e.target.value); // Apply immediately
+                handleApplyClick(groupingOption, e.target.value);
+                setShowOptions(!showOptions);
               }}
             >
               <option value="priority">Priority</option>

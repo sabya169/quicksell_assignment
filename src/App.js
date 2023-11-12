@@ -3,9 +3,10 @@ import "./App.css";
 import { useEffect } from "react";
 import KanbanBoard from "./components/KanbanBoard/KanbanBoard";
 import { useGetDataQuery } from "./CustomHook/useQueryHook";
+import Loader from "./components/Loader/Loader";
 
 function App() {
-  const { data, isLoading, isError, refetch } = useGetDataQuery();
+  const { data, isLoading, refetch } = useGetDataQuery();
 
   useEffect(() => {
     refetch();
@@ -13,9 +14,11 @@ function App() {
 
   return (
     <div className="App">
-      {isLoading && <p>Loading data...</p>}
-      {isError && <p>Error fetching data</p>}
-      {data && <KanbanBoard tickets={data.tickets} users={data.users} />}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        data && <KanbanBoard tickets={data.tickets} users={data.users} />
+      )}
     </div>
   );
 }

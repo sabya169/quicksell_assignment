@@ -12,7 +12,7 @@ import {
 } from "./style";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FaEllipsisH } from "react-icons/fa";
-import { FcTodoList } from "react-icons/fc";
+import { BsCircle } from "react-icons/bs";
 import { TbProgressCheck } from "react-icons/tb";
 import { GoCheckCircleFill } from "react-icons/go";
 import { MdCancel } from "react-icons/md";
@@ -29,11 +29,11 @@ const userAvatarUrl =
   "https://tamilnaducouncil.ac.in/wp-content/uploads/2020/04/dummy-avatar.jpg";
 
 const statusIcon = {
-  todo: <FcTodoList size={18} />,
+  todo: <BsCircle size={18} color="#E8E9EA" />,
   inprogress: <TbProgressCheck size={22} color="orange" />,
   done: <GoCheckCircleFill size={22} color="blue" />,
   cancelled: <MdCancel size={22} color="grey" />,
-  backlog: <IoScanCircle size={22} color="black" />,
+  backlog: <IoScanCircle size={22} color="grey" />,
 };
 
 const priorityIcon = {
@@ -82,10 +82,7 @@ const ColumnTitleCard = ({ group, groupingOption, joinedData }) => {
         {groupingOption === "user" ? (
           <Avatar>
             <img src={userAvatarUrl} alt="User Avatar" className="avatar_img" />
-            <StatusIndicator
-              className="status-indicator"
-              status={countUsers[0].available}
-            />
+            <StatusIndicator status={countUsers[0].available} />
           </Avatar>
         ) : (
           <div>
@@ -101,10 +98,10 @@ const ColumnTitleCard = ({ group, groupingOption, joinedData }) => {
       </StartElements>
       <EndElements>
         <PlusIcon>
-          <AiOutlinePlus />
+          <AiOutlinePlus color="#6E7279" />
         </PlusIcon>
         <MoreIcon>
-          <FaEllipsisH />
+          <FaEllipsisH color="#6E7279" />
         </MoreIcon>
       </EndElements>
     </CardHeader>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import Navbar from "../Navbar/Navbar";
 import ColumnTitleCard from "../ColumnTitleCard/ColumnTitleCard";
+import { GroupContainer, Group } from "./style";
 
 const KanbanBoard = ({ tickets, users }) => {
   const combinedData = {
@@ -105,9 +106,9 @@ const KanbanBoard = ({ tickets, users }) => {
   }, [groupingOption]);
 
   return (
-    <div className="kanban-board">
+    <div>
       <Navbar handleApplyClick={handleApplyClick} />
-      <div className="group-container">
+      <GroupContainer>
         {Object.keys(groupedData).map((group, index) => (
           <ColumnTitleCard
             key={index}
@@ -116,21 +117,21 @@ const KanbanBoard = ({ tickets, users }) => {
             joinedData={combinedData.joinedData}
           />
         ))}
-      </div>
-      <div className="group-container">
+      </GroupContainer>
+      <GroupContainer>
         {Object.entries(groupedData).map(([group, groupData]) => (
-          <div key={group} className="group">
+          <Group key={group}>
             {groupData.map((ticket, idx, groupData) => (
               <Card
                 key={ticket.id}
                 data={ticket}
                 count={groupData.length}
-                group={group}
+                groupingOption={groupingOption}
               />
             ))}
-          </div>
+          </Group>
         ))}
-      </div>
+      </GroupContainer>
     </div>
   );
 };
