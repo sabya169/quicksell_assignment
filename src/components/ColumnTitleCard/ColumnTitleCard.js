@@ -9,6 +9,7 @@ import {
   MoreIcon,
   StartElements,
   EndElements,
+  DropdownElem,
 } from "./style";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FaEllipsisH } from "react-icons/fa";
@@ -24,6 +25,7 @@ import {
   PiCellSignalMediumBold,
   PiCellSignalLowBold,
 } from "react-icons/pi";
+import Dropdown from "../Dropdown/Dropdown";
 
 const userAvatarUrl =
   "https://tamilnaducouncil.ac.in/wp-content/uploads/2020/04/dummy-avatar.jpg";
@@ -104,6 +106,9 @@ const ColumnTitleCard = ({ group, groupingOption, joinedData }) => {
           <FaEllipsisH color="#6E7279" />
         </MoreIcon>
       </EndElements>
+      <DropdownElem>
+        <Dropdown />
+      </DropdownElem>
     </CardHeader>
   );
 };

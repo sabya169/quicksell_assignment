@@ -132,6 +132,7 @@ const KanbanBoard = ({ tickets, users }) => {
           </Group>
         ))}
       </GroupContainer>
+     
     </div>
   );
 };

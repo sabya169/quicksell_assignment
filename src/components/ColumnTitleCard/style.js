@@ -42,6 +42,20 @@ export const EndElements = styled.div`
   justify-content: flex-end;
   gap: 1rem;
   width: 20%;
+
+  /* Media query for screen sizes between 501px to 1000px */
+  @media (max-width: 1246px) {
+    display: none;
+  }
+`;
+
+export const DropdownElem = styled.div`
+  @media (min-width: 1247px) {
+    display: none;
+  }
+  @media (max-width: 1246px) {
+    display: block;
+  }
 `;
 
 export const Name = styled.p`
